@@ -1,0 +1,119 @@
+openapi: 3.0.0
+2 info:
+3 title: Student Grades API
+4 version: 1.0.0
+5 description: A simple API to manage student grades
+6
+7 paths:
+8 /grades:
+9 get:
+1
+0 summary: Get all student grades
+1
+1 responses:
+1
+2 '200':
+1
+3 description: A list of all grades
+1
+4 content:
+1
+5 application/json:
+1
+6 example:
+1
+7 - student_id: "S001"
+1
+8 name: "Alice"
+1
+9 grade: 88
+2
+0
+2
+1 post:
+2
+2 summary: Add a new student grade
+2
+3 requestBody:
+2
+4 required: true
+2
+5 content:
+2
+6 application/json:
+2
+7 schema:
+2
+8 type: object
+2
+9 required: [student_id, name, grade]
+3
+0 properties:
+3
+1 student_id:
+3
+2 type: string
+3
+3 example: "S003"
+3
+4 name:
+3
+5 type: string
+3
+6
+example: "Carol"
+3
+7 grade:
+3
+8 type: number
+3
+9 minimum: 0
+4
+0 maximum: 100
+4
+1 example: 91
+4
+2 responses:
+4
+3
+'201':
+4
+4 description: Grade successfully created
+4
+5 '400':
+4
+6 description: Invalid or missing input
+4
+7 '409':
+4
+8 description: Student ID already exists
+4
+9
+5
+0 /grades/{student_id}:
+5
+1 get:
+5
+2 summary: Get a specific student grade
+5
+3 parameters:
+5
+4 - name: student_id
+5
+5 in: path
+5
+6 required: true
+5
+7 schema:
+5
+8 type: string
+5
+9 responses:
+6
+0 '200':
+6
+1 description: The student grade record
+6
+2 '404':
+6
+3 description: Student not found
