@@ -1,119 +1,66 @@
 openapi: 3.0.0
 info:
-title: Student Grades API
-version: 1.0.0
-description: A simple API to manage student grades
+  title: Student Grades API
+  version: 1.0.0
+  description: A simple API to manage student grades
 
 paths:
-/grades:
-get:
+  /grades:
+    get:
+      summary: Get all student grades
+      responses:
+        '200':
+          description: A list of all grades
+          content:
+            application/json:
+              example:
+                - student_id: "S001"
+                  name: "Alice"
+                  grade: 88
 
-summary: Get all student grades
+    post:
+      summary: Add a new student grade
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - student_id
+                - name
+                - grade
+              properties:
+                student_id:
+                  type: string
+                  example: "S003"
+                name:
+                  type: string
+                  example: "Carol"
+                grade:
+                  type: number
+                  minimum: 0
+                  maximum: 100
+                  example: 91
+      responses:
+        '201':
+          description: Grade successfully created
+        '400':
+          description: Invalid or missing input
+        '409':
+          description: Student ID already exists
 
-responses:
-
-'200':
-
-description: A list of all grades
-
-content:
-
-application/json:
-
-example:
-
-- student_id: "S001"
-
-name: "Alice"
-
-grade: 88
-
-
-
-post:
-
-summary: Add a new student grade
-
-requestBody:
-
-required: true
-
-content:
-
-application/json:
-
-schema:
-
-type: object
-
-required: [student_id, name, grade]
-
-properties:
-
-student_id:
-
-type: string
-
-example: "S003"
-
-name:
-
-type: string
-
-
-example: "Carol"
-
-grade:
-
-type: number
-
-minimum: 0
-
-maximum: 100
-
-example: 91
-
-responses:
-
-
-'201':
-
-description: Grade successfully created
-
-'400':
-
-description: Invalid or missing input
-
-'409':
-
-description: Student ID already exists
-
-
-
-/grades/{student_id}:
-
-get:
-
-summary: Get a specific student grade
-
-parameters:
-
-- name: student_id
-
-in: path
-
-required: true
-
-schema:
-
-type: string
-
-responses:
-
-'200':
-
-description: The student grade record
-
-'404':
-
-description: Student not found
+  /grades/{student_id}:
+    get:
+      summary: Get a specific student grade
+      parameters:
+        - name: student_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The student grade record
+        '404':
+          description: Student not found
