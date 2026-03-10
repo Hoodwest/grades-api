@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, request
+from flasgger import Swagger
 
  # Create the Flask app
 app = Flask(__name__)
+swagger  = Swagger(app)
 
 # This list acts as our database — it lives in memory while the server runs
 grades = [
